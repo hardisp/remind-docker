@@ -1,5 +1,5 @@
 FROM node:alpine
-# FROM [IMAGE]:[WILL_RUN_IN_OS]
+# FROM [IMAGE]:[OS_RUNNING_THE_IMAGE]
 
 COPY . /app
 

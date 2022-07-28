@@ -25,7 +25,7 @@ basic-docker         latest    b825e5de788c   5 days ago    174MB
 docker run basic-docker
 ```
 
-## Pull and Run DOcker image from docker hub
+## Pull and Run Docker image from docker hub
 
 ```
 docker run ubuntu
@@ -61,3 +61,31 @@ Exit from bash:
 ```
 exit
 ```
+
+## Ubuntu packages
+
+List all available package
+
+```
+apt list
+```
+
+**At the first time run update to update package database**
+
+```
+apt update
+```
+
+## Try install package
+
+```
+apt install nano
+```
+
+## Try remove package
+
+```
+apt remove nano
+```
+
+
