@@ -221,8 +221,14 @@ tail -n 5 /etc/adduser.conf
 
 ## Redirection
 
-We explain by example. We will read content from file1.txt and instantly copy the text to the new file call file2.txt
+We explain by example. We will read content from file1.txt and `instantly copy` the text to the new file call file2.txt
 
 ```
 cat file1.txt > file2.txt
+```
+
+We can `combined` two or more file `into 1 file`: 
+
+```
+cat file1.txt file2.txt > combined.txt
 ```
