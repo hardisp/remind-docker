@@ -1,0 +1,10 @@
+{
+  "name": "E-Book Hello World",
+  "price": 49,
+  "published": 2022,
+  "tags": ["software", "devops"],
+  "author": {
+    "first_name": "Hardi",
+    "last_Name": "Suputra"
+  }
+}
