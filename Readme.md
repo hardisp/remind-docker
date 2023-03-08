@@ -1,21 +1,23 @@
-# Docker Basic 
+# Docker Basic
 
 How to package our `Dockerfile`
 
 ```
-docker build -t basic-docker . 
+docker build -t basic-docker .
 ```
-Note: 
+
+Note:
+
 > -t mean tag name
 > `basic-docker` will be the repository name
 > `.` is the path
 
-## Listing Images:  (all Images)
+## Listing Images: (all Images)
 
 ```
 docker image ls
 
-REPOSITORY           TAG       IMAGE ID       CREATED       SIZE  
+REPOSITORY           TAG       IMAGE ID       CREATED       SIZE
 basic-docker         latest    b825e5de788c   5 days ago    174MB
 ```
 
@@ -25,6 +27,14 @@ basic-docker         latest    b825e5de788c   5 days ago    174MB
 docker run basic-docker
 ```
 
+## Start docker
+
+First run `docker ps -a` to look at all stop container, then copy the id of the image and run start.
+
+```bash
+docker start -i b825e5de788c # start docker image with given ID in interactive mode (-i)
+```
+
 ## Pull and Run Docker image from docker hub
 
 ```
@@ -32,32 +42,37 @@ docker run ubuntu
 ```
 
 note:
-> Use `run` here to pull if image not available on local machine and run the image
->> `Unable to find image 'ubuntu:latest' locally`
 
+> Use `run` here to pull if image not available on local machine and run the image
+>
+> > `Unable to find image 'ubuntu:latest' locally`
 
 ## Start Container to Interactive
 
 ```
 docker run -it ubuntu
-``` 
+```
 
-note: 
+note:
+
 > flag `-it` mean interactive
 
-**Try**: 
+**Try**:
 
 ```
 echo $0
 ```
+
 ```
 history
 ```
+
 ```
 !2
 ```
 
-Exit from bash: 
+Exit from bash:
+
 ```
 exit
 ```
@@ -88,4 +103,4 @@ apt install nano
 apt remove nano
 ```
 
-
+MORE ABOUT LINUX [HERE](/Ubuntu-Readme.md)
