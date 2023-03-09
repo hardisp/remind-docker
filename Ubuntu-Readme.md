@@ -528,3 +528,129 @@ pwd
 
 In other hand there is other command to add user, it is `adduser`
 This command will more interactive, but often to use.
+
+### Managing Group
+
+groupadd use to execute this
+
+```bash
+groupadd developers
+```
+
+Where it is, it in /etc/group, check it
+
+```bash
+cat /etc/group
+
+# Result
+# ...
+developers:x:1001:
+
+# 1001 is ID of the group
+```
+
+Add `john` to the group. Before do that let me explain the group detail:
+
+> Every linux user has 1 primary group and 0 or more than 1 supplementary group. The primary group is automatically created when we add the user.
+
+```bash
+usermod -G developers john
+
+# Check it
+cat /etc/passwd | grep john
+
+# Short way
+grep john /etc/passwd
+
+groups john # check john's group
+```
+
+## File Permission
+
+We will try create a file, with give it permission.
+
+First go to home directory and then create a `sh` file.
+
+```bash
+echo echo hello > deploy.sh
+
+# check it
+cat deploy.sh
+echo hello # result
+```
+
+```bash
+ls -l # full list data
+
+# Result
+-rw-r--r-- 1 root root   11 Mar  9 04:23 deploy.sh
+drwxr-x--- 2 john john 4096 Mar  8 05:31 john
+```
+
+in the firs letter we will see permission
+
+Explaiantion :
+
+```
+first letter (d, -)
+ d: Directory
+ -: A file
+
+other letter:
+It dived by 3 groups
+-(rw-)(r--)(r--)
+d(rwx)(r-x)(---)
+
+r: read
+w: write
+x: execute
+
+if (-) it's mean don't have permission for it
+
+Now, so what mean for each group:
+- first group is mean for user who create that file
+- second group is permission for group who own that's file
+- third gropu is permission for anyone else
+```
+
+Now try excute the sh file (deploy.sh)
+
+```bash
+/home# ./deploy.sh
+bash: ./deploy.sh: Permission denied
+```
+
+You got error because you don't have permission for execute it
+
+> -(rw-)r--r-- 1 root root 11 Mar 9 04:23 deploy.sh
+
+Now, try change the permisiion for the user (u), group (g), or other(o).
+
+```bash
+chmod u+x deploy.sh # Add permission to execute for user (u). To remove use -
+
+# check the update
+ls -l
+-rwxr--r-- 1 root root   11 Mar  9 04:23 deploy.sh
+```
+
+It's been changed: -rw`x`r--r--
+
+Try it
+
+```bash
+./deploy.sh
+
+# Result
+hello
+```
+
+How to add bulk permission?
+
+```bash
+chmod og+x+w-r *.sh
+```
+
+It will update permission for other and group. In that case we add permission to execute and write, and remove permission for read.
+
+\*.sh mean it will apply to all file with sh extention
