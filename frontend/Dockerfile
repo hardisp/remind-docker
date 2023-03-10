@@ -5,6 +5,9 @@ USER app
 
 WORKDIR /app
 
+# Put Run make dir after set user to make that user as directory owner
+RUN mkdir data
+
 COPY package*.json .
 RUN npm install
 COPY . .

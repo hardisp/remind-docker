@@ -127,3 +127,7 @@ docker container rm -f $(docker container ls -a -q)
 > -a: will stop `container` first
 > we also can shorthand it will `-aq`
 > -f: force it (remove)
+
+- [Other Ubuntu Command](./Ubuntu-Readme.md)
+- [Build Image](./Building-Image.md)
+- [Working with Containers](./Container.md)
