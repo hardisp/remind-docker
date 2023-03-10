@@ -55,8 +55,8 @@ services:
     ports: # Array
       - 3001:3001 # PORT_OF_HOST:PORT_OF_CONTAINER
     environment:
-      DBL_URL: mongodb://db/dbname # in this compose we have hosts: frontend, server, db
-      # - DBL_URL=mongodb://db/dbname # Another alternative use list
+      DB_URL: mongodb://db/vidly # in this compose we have hosts: frontend, server, db
+      # - DB_URL=mongodb://db/dbname # Another alternative use list
 
   db:
     image: mongo:4.0-xenial # We pull from docker hub image
@@ -223,3 +223,5 @@ server:
     volumes:
       - ./server:/app # We map the server directory to app inside container
 ```
+
+## Migrating the database

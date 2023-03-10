@@ -55,8 +55,8 @@ services:
     ports: # Array
       - 3001:3001 # PORT_OF_HOST:PORT_OF_CONTAINER
     environment:
-      DBL_URL: mongodb://db/dbname # in this compose we have hosts: frontend, server, db
-      # - DBL_URL=mongodb://db/dbname # Another alternative use list
+      DB_URL: mongodb://db/vidly # in this compose we have hosts: frontend, server, db
+      # - DB_URL=mongodb://db/dbname # Another alternative use list
 
   db:
     image: mongo:4.0-xenial # We pull from docker hub image
@@ -64,10 +64,10 @@ services:
       - 27017:27017 # Mongodb default listen to port
     volumes:
       # - APPNAME:ORIGIALDATASOURCE
-      - docker-compose-example:/data/db # by default mongodb put the data on /data/db, so we want to map the volume to the data directory where the data is outside of the volume
+      - vidly:/data/db # by default mongodb put the data on /data/db, so we want to map the volume to the data directory where the data is outside of the volume
 
 volumes:
-  docker-compose-example:
+  vidly:
 ```
 
 ## Run Build
