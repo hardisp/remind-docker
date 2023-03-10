@@ -1,4 +1,5 @@
 *.orig
 node_modules
 *.env
+*.tar
 
