@@ -4,11 +4,11 @@ services:
   frontend:
     build: ./frontend
     ports: # Array
-      - 3000:3000 # PORT_OF_HOST:PORT_OF_CONTAINER
+      - 3000:3000 # PORT_OF_HOST(our_machine):PORT_OF_CONTAINER
   server:
     build: ./server
     ports: # Array
-      - 3001:3001 # PORT_OF_HOST:PORT_OF_CONTAINER
+      - 3001:3001 # PORT_OF_HOSTPORT_OF_HOST(our_machine):PORT_OF_CONTAINER
     environment:
       DBL_URL: mongodb://db/dbname
       # - DBL_URL=mongodb://db/dbname # Another alternative use list
