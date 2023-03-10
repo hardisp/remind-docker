@@ -310,3 +310,13 @@ Dockerfile         data               node_modules       package.json       secr
 README.md          hello.txt          package-lock.json  public             src
 /app $
 ```
+
+### Sharing the Source Code with a Container
+
+In the production we know we need to build the app and publish the app, but in the development we need it's always up to date with the latest code. So we need to create mapping or binding between the directory on host and the directory inside the container, so when we update the anhthing inside the host directory, it will immediately update the data inside the container directory.
+
+```bash
+docker run -d -p 5001:3000 -v $(pwd):/app docker-react-app # run docker container binding with pwd(print working directory) into /app directory inside container
+```
+
+^ we don't need the volume inside that container since it's just a FE app, don't like a database.
