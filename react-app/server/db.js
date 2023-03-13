@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost/vidly";
+const dbUrl = process.env.DB_URL || "mongodb://localhost/appdb";
 
 console.log(dbUrl);
 

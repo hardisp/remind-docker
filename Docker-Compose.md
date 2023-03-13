@@ -55,7 +55,7 @@ services:
     ports: # Array
       - 3001:3001 # PORT_OF_HOST:PORT_OF_CONTAINER
     environment:
-      DB_URL: mongodb://db/vidly # in this compose we have hosts: frontend, server, db
+      DB_URL: mongodb://db/appdb # in this compose we have hosts: frontend, server, db
       # - DB_URL=mongodb://db/dbname # Another alternative use list
 
   db:
@@ -225,3 +225,101 @@ server:
 ```
 
 ## Migrating the database
+
+When you release a application sometimes you want it's particular fill database with some data, that's call database migration.
+
+In this case we use `migrate-mongo` for mongodb package. So, we need create migration script it's inside [server/migrations](./docker_compose_example/server/migrations/) folder.
+
+There is 2 funtion up and down, on up we inserting some data. And down if we want to remove the data
+
+```js
+module.exports = {
+  async up(db, client) {
+    await db
+      .collection("movies")
+      .insertMany([
+        { title: "Avatar" },
+        { title: "Star Wars" },
+        { title: "Terminator" },
+        { title: "Titanic" },
+      ]);
+  },
+
+  async down(db, client) {
+    await db.collection("movies").deleteMany({
+      title: {
+        $in: ["Avatar", "Star Wars", "Terminator", "Titanic"],
+      },
+    });
+  },
+};
+```
+
+To execute migration we can do this command inside server folder (backend project root folder)
+
+```bash
+migrate-mongo up
+```
+
+> When first time run migrate command, it will save into changelog db. So if it's been run it will run again.
+
+In this case we add script into [package.json](./docker_compose_example/server/package.json) to do migration up:
+
+```json
+...
+"script":{
+  "db:up": "migrate-mongo up",
+  ...
+}
+...
+```
+
+So we can run it:
+
+```bash
+npm run db:up
+```
+
+So, how we can do it when run the docker? we need to add command property to the `server` in docker-compose file
+
+```yml
+
+---
+services:
+---
+server:
+  ...
+  command: npm run db:up && npm start
+...
+```
+
+In the above snippet that can be a problem because it will possible the command run before the mongo completely install, so we need run wait for it. You can go to [docker documentation page](https://docs.docker.com/compose/compose-file/#depends_on) and see how to resolve it.
+
+You can use or add `depends_on`
+
+```yml
+depends_on:
+  db:
+    condition: service_started
+```
+
+Inside the folder already avilable with old way, it's use wait-for script. Maybe it will help for old docker:
+
+```yml
+server:
+    ....
+    volumes:
+      - ./server:/app # We map the server directory to app inside container
+
+    # command: ./wait-for db:27017 && migrate-monngo up && npm start
+    command: ./docker-entrypoint.sh # Just simplify with create sh script with same command
+...
+```
+
+## Running Test
+
+On development we can do test when build the container
+
+```
+
+```

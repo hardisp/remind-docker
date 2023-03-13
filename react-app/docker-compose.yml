@@ -5,24 +5,37 @@ services:
     build: ./frontend
     ports: # Array
       - 3000:3000 # PORT_OF_HOST(our_machine):PORT_OF_CONTAINER
+    volumes: 
+      - ./frontend:/app
+  # frontend-test:
+  #   image: docker_compose_example-frontend
+  #   volumes: 
+  #     - ./frontend:/app
+  #   command: npm test
   server:
     build: ./server
+    # depends_on:
+    #   - db
     ports: # Array
       - 3001:3001 # PORT_OF_HOSTPORT_OF_HOST(our_machine):PORT_OF_CONTAINER
     environment:
-      DB_URL: mongodb://db/vidly
+      DB_URL: mongodb://db/appdb
       # - DB_URL=mongodb://db/dbname # Another alternative use list
     volumes: 
       - ./server:/app # We map the server directory to app inside container
-    # command: ./wait-for db:27017 && migrate-monngo up && npm start
+
+    # command: ./wait-for db:27017 && npm run db:up && npm start
     command: ./docker-entrypoint.sh
+
+    # command: npm run db:up && npm start
+    
   db:
     image: mongo:4.0-xenial # We pull from docker hub image
     ports:
       - 27017:27017 # Mongodb default listen to port
     volumes:
       # - APPNAME:ORIGIALDATASOURCE
-      - vidly:/data/db # by default mongodb put the data on /data/db, so we want to map the volume to the data directory where the data is outside of the volume
+      - appdb:/data/db # by default mongodb put the data on /data/db, so we want to map the volume to the data directory where the data is outside of the volume
 
 volumes:
-  vidly:
+  appdb:
